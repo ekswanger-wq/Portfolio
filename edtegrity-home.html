@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EdTegrity — Academic integrity, verified</title>
+<meta name="description" content="Verify plagiarism against scholarly sources and audit AI output for hallucinations and ethics with your own rubric." />
+<meta property="og:title" content="EdTegrity — Academic integrity, verified" />
+<meta property="og:description" content="Verify plagiarism against scholarly sources and audit AI output." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --radius:.5rem;
+    --background:oklch(1 0 0);
+    --foreground:oklch(.18 .07 265);
+    --card:oklch(1 0 0);
+    --primary:oklch(.62 .21 268);
+    --primary-foreground:oklch(1 0 0);
+    --muted-foreground:oklch(.5 .04 265);
+    --border:oklch(.92 .015 265);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --background:oklch(.16 .05 265);
+      --foreground:oklch(.97 .01 265);
+      --card:oklch(.2 .06 265);
+      --primary:oklch(.68 .2 268);
+      --primary-foreground:oklch(.12 .05 265);
+      --muted-foreground:oklch(.74 .03 265);
+      --border:oklch(1 0 0 / 12%);
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;border-color:var(--border)}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:Inter,system-ui,-apple-system,sans-serif;
+    background:var(--background);color:var(--foreground);
+    -webkit-font-smoothing:antialiased;line-height:1.5;
+  }
+  h1,h2,h3{letter-spacing:-.01em;line-height:1.05;font-weight:600}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:72rem;margin:0 auto;padding:0 1.5rem}
+  /* header */
+  header.site{border-bottom:1px solid var(--border);background:color-mix(in oklab,var(--background) 80%,transparent);backdrop-filter:blur(8px);position:sticky;top:0;z-index:20}
+  .bar{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
+  .logo{display:inline-flex;align-items:center;gap:.55rem;font-weight:700;font-size:1.15rem;letter-spacing:-.02em}
+  .logo .mark{display:grid;place-items:center;width:2rem;height:2rem;border-radius:.5rem;background:var(--primary);color:var(--primary-foreground)}
+  .logo .mark svg{width:1.1rem;height:1.1rem}
+  nav.main{display:none;gap:1.5rem;font-size:.875rem}
+  nav.main a{color:var(--muted-foreground)}
+  nav.main a:hover{color:var(--foreground)}
+  @media(min-width:768px){nav.main{display:flex;align-items:center}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:var(--radius);font-size:.875rem;font-weight:500;padding:.5rem 1rem;border:1px solid transparent;cursor:pointer;transition:opacity .15s,background .15s}
+  .btn-primary{background:var(--primary);color:var(--primary-foreground)}
+  .btn-primary:hover{opacity:.9}
+  .btn-outline{border-color:var(--border);background:transparent;color:var(--foreground)}
+  .btn-outline:hover{background:color-mix(in oklab,var(--primary) 8%,transparent)}
+  .btn-lg{padding:.7rem 1.5rem;font-size:1rem}
+  /* hero */
+  .hero{text-align:center;padding:5rem 1.5rem 6rem;max-width:72rem;margin:0 auto}
+  .pill{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--border);background:var(--card);border-radius:999px;padding:.25rem .75rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted-foreground);margin-bottom:1.5rem}
+  .pill svg{width:.8rem;height:.8rem}
+  .hero h1{font-size:clamp(2.75rem,8vw,4.5rem)}
+  .hero h1 em{font-style:italic;color:var(--primary)}
+  .lede{max-width:42rem;margin:1.5rem auto 0;font-size:1.125rem;color:var(--muted-foreground)}
+  .cta{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-top:2rem}
+  /* features */
+  .grid3{display:grid;gap:1rem;grid-template-columns:1fr;padding-bottom:6rem}
+  @media(min-width:768px){.grid3{grid-template-columns:repeat(3,1fr)}}
+  .card{border:1px solid var(--border);background:var(--card);border-radius:.75rem;padding:1.5rem}
+  .card .icon{display:inline-grid;place-items:center;width:2.25rem;height:2.25rem;border-radius:.375rem;background:color-mix(in oklab,var(--primary) 12%,transparent);color:var(--primary);margin-bottom:.75rem}
+  .card .icon svg{width:1.25rem;height:1.25rem}
+  .card h3{font-size:1.25rem}
+  .card p{margin-top:.5rem;font-size:.875rem;color:var(--muted-foreground)}
+  /* score band */
+  .band{border-top:1px solid var(--border);background:var(--card)}
+  .band .wrap{padding:5rem 1.5rem}
+  .band h2{font-size:clamp(1.875rem,4vw,2.25rem)}
+  .band p{margin-top:.75rem;max-width:42rem;color:var(--muted-foreground)}
+  .gauge{margin-top:2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+  .gauge svg{transform:rotate(-90deg)}
+  .gauge .track{stroke:var(--border)}
+  .gauge .fill{stroke:var(--primary);stroke-linecap:round;transition:stroke-dashoffset 1.2s ease}
+  .gauge .value{font-size:2rem;font-weight:700}
+  .gauge label{display:block;font-size:.8rem;color:var(--muted-foreground);margin-bottom:.4rem}
+  .gauge input{width:14rem;accent-color:var(--primary)}
+  footer.site{border-top:1px solid var(--border);padding:2rem 0;text-align:center;font-size:.75rem;color:var(--muted-foreground)}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap bar">
+    <a class="logo" href="#top">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      </span>
+      EdTegrity
+    </a>
+    <nav class="main">
+      <a href="#top">Home</a>
+      <a href="#how">How it works</a>
+      <a href="#score">The Score</a>
+    </nav>
+    <a class="btn btn-primary" href="https://automagic-portfolio.lovable.app" target="_blank" rel="noopener noreferrer">return to portfolio</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <p class="pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      For students &amp; educators
+    </p>
+    <h1>Academic integrity,<br /><em>verified.</em></h1>
+    <p class="lede">EdTegrity cross-checks writing against scholarly databases and audits AI-generated content for hallucinations and ethics — producing a transparent integrity score you can stand behind.</p>
+    <div class="cta">
+      <a class="btn btn-primary btn-lg" href="#score">Start free</a>
+      <a class="btn btn-outline btn-lg" href="#how">See how it works</a>
+    </div>
+  </section>
+
+  <section class="wrap" id="how">
+    <div class="grid3">
+      <div class="card">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        <h3>Scholarly source check</h3>
+        <p>Every passage is matched against CrossRef and Semantic Scholar — peer-reviewed sources, not random web pages.</p>
+      </div>
+      <div class="card">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M18 17.5 18.8 19.4 20.7 20.2 18.8 21 18 22.9 17.2 21 15.3 20.2 17.2 19.4z"/></svg></span>
+        <h3>AI hallucination audit</h3>
+        <p>Paste or upload AI output. We extract factual claims, verify each, and surface fabrications.</p>
+      </div>
+      <div class="card">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H10a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2h4"/></svg></span>
+        <h3>Your rubric, your score</h3>
+        <p>Define what "good" means — accuracy, citation quality, bias — and we score against it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="score">
+    <div class="wrap">
+      <h2>The EdTegrity Score</h2>
+      <p>A 0–100 indicator combining originality, citation density, and source-match strength. It's a signal, not a verdict — every flagged passage links to its source so you can decide.</p>
+      <div class="gauge">
+        <svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="Example EdTegrity score gauge">
+          <circle class="track" cx="70" cy="70" r="60" fill="none" stroke-width="12"/>
+          <circle id="fill" class="fill" cx="70" cy="70" r="60" fill="none" stroke-width="12" stroke-dasharray="376.99" stroke-dashoffset="376.99"/>
+        </svg>
+        <div>
+          <div class="value"><span id="scoreValue">0</span><span style="font-size:1rem;color:var(--muted-foreground)">/100</span></div>
+          <label for="scoreRange">Drag to preview a score</label>
+          <input id="scoreRange" type="range" min="0" max="100" value="86" />
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">© <span id="year"></span> EdTegrity</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var C = 2 * Math.PI * 60;
+  var fill = document.getElementById('fill');
+  var out = document.getElementById('scoreValue');
+  var range = document.getElementById('scoreRange');
+  function render(v){
+    fill.setAttribute('stroke-dasharray', C.toFixed(2));
+    fill.setAttribute('stroke-dashoffset', (C - (v / 100) * C).toFixed(2));
+    out.textContent = v;
+  }
+  range.addEventListener('input', function(){ render(Number(this.value)); });
+  render(0);
+  setTimeout(function(){ render(Number(range.value)); }, 250);
+</script>
+</body>
+</html>
