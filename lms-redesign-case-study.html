@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Compliance Clutter to Clarity — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EAE8E2;
+    --panel: #FFFFFF;
+    --ink: #211F1B;
+    --ink-soft: #57534A;
+    --hairline: #D3CFC5;
+    --teal: #1B6E6A;
+    --teal-dark: #134F4C;
+    --teal-wash: #DEE9E7;
+
+    --bad-orange: #D9531E;
+    --bad-yellow: #E8B923;
+    --bad-purple: #7A4FA3;
+    --bad-green: #2E8B57;
+    --bad-blue: #2E6FA3;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .wide{
+    max-width: 960px;
+  }
+
+  h1,h2,h3{
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: 96px 0 56px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hero h1{
+    font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+    line-height: 1.08;
+    max-width: 15ch;
+  }
+  .hero p.dek{
+    margin-top: 22px;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+  .meta{
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 32px;
+    font-size: 0.92rem;
+  }
+  .meta dt{
+    color: var(--ink-soft);
+    margin: 0 0 4px;
+  }
+  .meta dd{
+    margin: 0;
+    font-weight: 600;
+  }
+  @media (max-width: 620px){
+    .meta{ grid-template-columns: 1fr; gap: 16px; }
+  }
+
+  /* ---------- SECTION SCAFFOLDING ---------- */
+  section{
+    padding: 64px 0;
+  }
+  section + section{
+    border-top: 1px solid var(--hairline);
+  }
+  .section-label{
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--teal-dark);
+    margin-bottom: 14px;
+  }
+  section h2{
+    font-size: 1.7rem;
+    margin-bottom: 18px;
+    max-width: 24ch;
+  }
+  section p{
+    max-width: 62ch;
+    color: var(--ink-soft);
+  }
+  section p.lead{
+    color: var(--ink);
+    font-size: 1.08rem;
+  }
+
+  /* ---------- DIAGNOSIS LIST ---------- */
+  .diagnosis-list{
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .diagnosis-item{
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .diagnosis-item:last-child{ border-bottom: 1px solid var(--hairline); }
+  .diagnosis-item h3{
+    font-size: 1.05rem;
+    font-family: "Public Sans", sans-serif;
+    font-weight: 700;
+    color: var(--teal-dark);
+  }
+  .diagnosis-item p{ margin: 0; color: var(--ink-soft); max-width: 56ch; }
+  @media (max-width: 620px){
+    .diagnosis-item{ grid-template-columns: 1fr; gap: 8px; }
+  }
+
+  /* ---------- MOCKUP FRAME ---------- */
+  .mockup-shell{
+    margin-top: 32px;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--panel);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  }
+  .mockup-chrome{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #E4E1D9;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .mockup-chrome .dot{
+    width: 9px; height:9px; border-radius:50%;
+    background: #C7C2B5;
+  }
+  .mockup-chrome .url{
+    margin-left: 10px;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: 5px;
+    padding: 3px 10px;
+    flex: 1;
+    max-width: 320px;
+  }
+
+  .toggle-row{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .toggle-btn{
+    font-family: "Public Sans", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline);
+    background: var(--panel);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .toggle-btn.active{
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+  }
+
+  /* ================= BEFORE MOCKUP ================= */
+  .mock-before{
+    font-family: "Times New Roman", Times, serif;
+    color: #333;
+  }
+  .b-topbar{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    padding: 10px 16px;
+    background: var(--bad-purple);
+    color: white;
+    font-family: "Public Sans", sans-serif;
+    font-size: 0.78rem;
+    flex-wrap: wrap;
+  }
+  .b-topbar .logo{
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-right: auto;
+  }
+  .b-topbar a{ color: white; text-decoration: underline; opacity:0.9; }
+  .b-topbar .bell{
+    background: var(--bad-orange);
+    border-radius: 50%;
+    width: 18px; height: 18px;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size: 0.65rem;
+  }
+
+  .b-body{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+  }
+  .b-sidebar{
+    background: #F2F0EA;
+    border-right: 1px solid var(--hairline);
+    padding: 16px 12px;
+    font-family: "Public Sans", sans-serif;
+    font-size: 0.8rem;
+  }
+  .b-sidebar .points{
+    background: var(--bad-yellow);
+    border: 2px dashed var(--bad-orange);
+    padding: 10px;
+    text-align:center;
+    font-weight: 700;
+    margin-bottom: 14px;
+    border-radius: 6px;
+  }
+  .b-sidebar ul{ list-style:none; padding:0; margin:0; }
+  .b-sidebar li{
+    padding: 7px 8px;
+    margin-bottom: 3px;
+    border-radius: 4px;
+  }
+  .b-sidebar li.current{ background: var(--bad-green); color:white; }
+  .b-sidebar li.locked{ color: #B3AFA5; }
+
+  .b-main{ padding: 20px 22px 26px; }
+  .b-banner{
+    background: var(--bad-yellow);
+    border: 2px solid var(--bad-orange);
+    color: #5c2e00;
+    font-family: "Comic Sans MS", cursive;
+    font-weight: 700;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+  }
+  .b-title{
+    font-family: "Comic Sans MS", cursive;
+    color: var(--bad-blue);
+    font-size: 1.5rem;
+    margin: 0 0 4px;
+  }
+  .b-progress-text{
+    font-family: "Public Sans", sans-serif;
+    font-size: 0.72rem;
+    color: #888;
+    margin-bottom: 14px;
+  }
+  .b-video{
+    background: #111;
+    color: #ddd;
+    font-family: "Public Sans", sans-serif;
+    font-size: 0.7rem;
+    width: 140px;
+    height: 78px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .b-video::after{
+    content: "AUTOPLAY \25B6";
+    position:absolute; bottom:4px; left:6px; font-size:0.6rem; color:#f2a900;
+  }
+  .b-copy{ font-size: 0.92rem; line-height: 1.5; color: #444; }
+  .b-copy p{ margin: 0 0 10px; }
+  .b-legal{
+    font-size: 0.7rem;
+    color: #999;
+    line-height: 1.4;
+    margin: 14px 0;
+  }
+  .b-check{ font-size: 0.75rem; font-family:"Public Sans", sans-serif; color:#666; margin-bottom: 16px; }
+  .b-quiz{
+    border: 1px dashed #bbb;
+    padding: 10px 12px;
+    font-family: "Public Sans", sans-serif;
+    font-size: 0.82rem;
+    margin-bottom: 16px;
+  }
+  .b-quiz label{ display:block; margin: 4px 0 4px 2px; }
+  .b-cta-row{
+    display:flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .b-btn{
+    font-family: "Public Sans", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 9px 14px;
+    border: none;
+    cursor: default;
+  }
+  .b-btn.b1{ background: var(--bad-orange); color:white; border-radius: 2px; }
+  .b-btn.b2{ background: var(--bad-green); color:white; border-radius: 14px; }
+  .b-btn.b3{ background: var(--bad-purple); color:white; text-transform:uppercase; }
+  .b-btn.b4{ background: none; color: var(--bad-blue); text-decoration: underline; font-weight:400; }
+
+  /* ================= AFTER MOCKUP ================= */
+  .mock-after{ font-family: "Public Sans", sans-serif; }
+  .a-topbar{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .a-topbar .course-name{ font-weight: 700; font-size: 0.92rem; }
+  .a-topbar .step{ font-size: 0.82rem; color: var(--ink-soft); }
+  .a-progress{
+    height: 4px;
+    background: var(--hairline);
+  }
+  .a-progress-fill{
+    height: 100%;
+    width: 40%;
+    background: var(--teal);
+  }
+  .a-main{ padding: 34px 40px 40px; max-width: 560px; }
+  .a-eyebrow{
+    font-size: 0.8rem;
+    color: var(--teal-dark);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .a-title{
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 0 0 14px;
+  }
+  .a-copy p{ color: var(--ink-soft); font-size: 0.95rem; margin: 0 0 14px; max-width: 52ch; }
+  .a-video{
+    background: #1D1D1B;
+    color: white;
+    width: 220px;
+    height: 124px;
+    border-radius: 6px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+    margin: 6px 0 20px;
+    font-size: 0.72rem;
+  }
+  .a-video .play{
+    width: 34px; height:34px; border-radius:50%;
+    background: white; color:#1D1D1B;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 0.8rem;
+  }
+  .a-video .cc{
+    position:absolute;
+  }
+  .a-video-wrap{ position:relative; width:220px; }
+  .a-cc-badge{
+    position:absolute; bottom: 8px; left: 8px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.4);
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: white;
+  }
+  .a-actions{
+    display:flex;
+    align-items:center;
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .a-btn-primary{
+    background: var(--teal);
+    color: white;
+    border: none;
+    font-family: "Public Sans", sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 12px 26px;
+    border-radius: 6px;
+    cursor: default;
+  }
+  .a-link{
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    text-decoration: underline;
+  }
+
+  .state{ display:none; }
+  .state.active{ display:block; }
+
+  /* ---------- TABLE ---------- */
+  table.changes{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 28px;
+    font-size: 0.92rem;
+  }
+  table.changes th{
+    text-align:left;
+    font-family: "Public Sans", sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    padding: 0 14px 10px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  table.changes td{
+    padding: 16px 14px 16px 0;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+    color: var(--ink-soft);
+  }
+  table.changes td:first-child{ color: var(--ink); font-weight: 600; }
+  table.changes tr:last-child td{ border-bottom: none; }
+
+  /* ---------- FOOTER / REFLECTION ---------- */
+  .reflection ul{
+    margin: 18px 0 0;
+    padding-left: 20px;
+    color: var(--ink-soft);
+  }
+  .reflection li{ margin-bottom: 8px; }
+  .caveat{
+    margin-top: 28px;
+    padding: 16px 18px;
+    border-left: 3px solid var(--teal);
+    background: var(--teal-wash);
+    font-size: 0.9rem;
+    color: var(--ink);
+    max-width: 56ch;
+  }
+
+  footer{
+    padding: 40px 0 80px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1>From compliance clutter to clarity</h1>
+      <p class="dek">A redesign case study: taking a cluttered, anxiety-inducing safety training module and rebuilding it around one idea at a time.</p>
+      <dl class="meta">
+        <div><dt>Course</dt><dd>Warehouse Safety Fundamentals*</dd></div>
+        <div><dt>Focus</dt><dd>Hierarchy, cognitive load, accessibility</dd></div>
+        <div><dt>Type</dt><dd>Personal redesign exercise</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <section class="context">
+    <div class="wrap">
+      <p class="section-label">Context</p>
+      <h2>Every company has a course like this one</h2>
+      <p class="lead">Mandatory, annual, built by committee, and dreaded by everyone who has to click through it. Warehouse Safety Fundamentals is a fictional stand-in for a pattern I keep seeing in real compliance training: a good learning objective buried under a decade of bolted-on features.</p>
+      <p>Each department wanted something added — the LMS vendor wanted gamification, legal wanted a wall of disclaimer text, and IT wanted every navigation option visible at all times, just in case. Nobody owned the experience as a whole, and it shows the moment you open a module.</p>
+    </div>
+  </section>
+
+  <section class="problem">
+    <div class="wrap wide">
+      <p class="section-label">The problem</p>
+      <h2>Here's what a learner actually opens</h2>
+      <p>No single decision here is unreasonable in isolation. Stacked together, they produce a screen that fights the learner instead of teaching them.</p>
+
+      <div class="toggle-row">
+        <button class="toggle-btn active" data-state="before">Before</button>
+        <button class="toggle-btn" data-state="after">After</button>
+      </div>
+
+      <div class="mockup-shell">
+        <div class="mockup-chrome">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">meridian-lms.internal/course/482/module/3.2.1.b</span>
+        </div>
+
+        <div class="state active" id="state-before">
+          <div class="mock-before">
+            <div class="b-topbar">
+              <span class="logo">MeridianLMS</span>
+              <a href="#">Dashboard</a><a href="#">Catalog</a><a href="#">Community</a><a href="#">Leaderboard</a><a href="#">Help</a>
+              <span class="bell">3</span>
+            </div>
+            <div class="b-body">
+              <div class="b-sidebar">
+                <div class="points">🏆 240 PTS<br>Level 3 Safety Star</div>
+                <ul>
+                  <li>1. Intro Video</li>
+                  <li>2. Hazard Types</li>
+                  <li class="current">3.2.1.b Fire Safety</li>
+                  <li class="locked">3.2.2 PPE</li>
+                  <li class="locked">4. Emergency Exits</li>
+                  <li class="locked">5. Final Quiz</li>
+                  <li class="locked">6. Certificate</li>
+                </ul>
+              </div>
+              <div class="b-main">
+                <div class="b-banner">⚠ IMPORTANT!!! READ BEFORE CONTINUING ⚠</div>
+                <h3 class="b-title">Fire Safety &amp; You!</h3>
+                <div class="b-progress-text">Progress: Module 3.2.1.b of 7 — 42% — Est. 34 min remaining</div>
+                <div class="b-video">▶ Loading video (autoplay)…</div>
+                <div class="b-copy">
+                  <p>In accordance with company policy 14-B, all associates are required to review the following information regarding fire prevention, suppression equipment, and evacuation procedures prior to the completion of this training unit.</p>
+                </div>
+                <div class="b-legal">
+                  Per OSHA-adjacent internal guideline 14-B.3, failure to acknowledge the foregoing shall be recorded in the associate's training file. This section is not a substitute for site-specific fire safety plans, which remain the responsibility of the facility manager and are subject to change without notice pursuant to the annual safety review cycle...
+                </div>
+                <div class="b-check"><input type="checkbox"> I have read and understood the above</div>
+                <div class="b-quiz">
+                  Quick check: Where is the nearest fire extinguisher?<br>
+                  <label><input type="radio"> Near the breakroom</label>
+                  <label><input type="radio"> By the loading dock</label>
+                  <label><input type="radio"> I don't know</label>
+                </div>
+                <div class="b-cta-row">
+                  <button class="b-btn b1">NEXT &gt;&gt;</button>
+                  <button class="b-btn b2">Continue Learning</button>
+                  <button class="b-btn b3">Submit &amp; Complete</button>
+                  <button class="b-btn b4">Mark as Done Instead</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="state" id="state-after">
+          <div class="mock-after">
+            <div class="a-topbar">
+              <span class="course-name">Warehouse Safety Fundamentals</span>
+              <span class="step">Step 2 of 5</span>
+            </div>
+            <div class="a-progress"><div class="a-progress-fill"></div></div>
+            <div class="a-main">
+              <p class="a-eyebrow">Fire safety</p>
+              <h3 class="a-title">Know your nearest extinguisher</h3>
+              <div class="a-copy">
+                <p>Every workstation is within 30 feet of an extinguisher. Before you finish this step, you'll be asked to point out the one closest to where you work.</p>
+              </div>
+              <div class="a-video-wrap">
+                <div class="a-video">
+                  <div class="play">▶</div>
+                  <span>90-second overview</span>
+                </div>
+                <span class="a-cc-badge">CC on</span>
+              </div>
+              <div class="a-actions">
+                <button class="a-btn-primary">Continue</button>
+                <a class="a-link" href="#">Save and exit</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="diagnosis">
+    <div class="wrap">
+      <p class="section-label">Diagnosis</p>
+      <h2>Five ways the design works against the content</h2>
+      <p>I ran this through a standard heuristic pass — Nielsen's usability principles, a WCAG contrast check, and a simple word count per screen — before touching any pixels.</p>
+
+      <div class="diagnosis-list">
+        <div class="diagnosis-item">
+          <h3>No visual hierarchy</h3>
+          <p>The warning banner, the title, and the quiz all compete at the same volume. Nothing tells the eye where to land first, so learners scan randomly instead of reading in order.</p>
+        </div>
+        <div class="diagnosis-item">
+          <h3>Cognitive overload</h3>
+          <p>Legal disclaimer, instructional copy, a quiz, and navigation all appear on one screen. Each would be fine alone; together they ask the learner to context-switch every few seconds.</p>
+        </div>
+        <div class="diagnosis-item">
+          <h3>Disorienting navigation</h3>
+          <p>A code like "3.2.1.b" tells a learner nothing about where they are or how much is left. The sidebar shows the whole tree at once, which advertises how long the course is rather than helping anyone move through it.</p>
+        </div>
+        <div class="diagnosis-item">
+          <h3>Accessibility gaps</h3>
+          <p>Autoplaying video with no captions excludes anyone in a shared space or with a hearing loss. Light grey text on white and a tiny video player fail basic contrast and target-size guidelines.</p>
+        </div>
+        <div class="diagnosis-item">
+          <h3>Motivation aimed at the wrong thing</h3>
+          <p>Points and levels reward clicking through, not understanding fire safety. When the badge is unrelated to the skill, it teaches people to chase the badge instead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="redesign">
+    <div class="wrap">
+      <p class="section-label">The redesign</p>
+      <h2>One idea, one action, per screen</h2>
+      <p class="lead">The "After" view in the toggle above is the same content, restructured. Nothing was cut for the sake of looking simple — the legal and safety content still exists, just moved to a reference page a learner can return to instead of scrolling past it mid-lesson.</p>
+      <p>The course name and step count replace the six-item nav bar. A single teal accent marks anything interactive, so there's never a question of which button actually moves you forward. Captions are on by default, and the video only plays when someone chooses to play it.</p>
+    </div>
+  </section>
+
+  <section class="changes">
+    <div class="wrap wide">
+      <p class="section-label">What changed, and why</p>
+      <table class="changes">
+        <thead>
+          <tr><th>Before</th><th>Why it failed</th><th>The fix</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Six nav items, a bell, an avatar menu</td>
+            <td>Every element competes for attention with no clear priority</td>
+            <td>Course name and step count only, plus one exit link</td>
+          </tr>
+          <tr>
+            <td>Four differently styled buttons per screen</td>
+            <td>Learners can't tell which one actually submits their work</td>
+            <td>One primary action, one quiet secondary link</td>
+          </tr>
+          <tr>
+            <td>Dense legal paragraph in small grey text</td>
+            <td>Low contrast plus wall-of-text invites skimming, not reading</td>
+            <td>Short paragraphs at readable size, legal detail moved to a reference page</td>
+          </tr>
+          <tr>
+            <td>Points and badges unrelated to the content</td>
+            <td>Rewards clicking through rather than understanding the material</td>
+            <td>Removed; progress shown as a plain step count</td>
+          </tr>
+          <tr>
+            <td>Autoplaying video, no captions, tiny frame</td>
+            <td>Excludes learners in shared spaces or with hearing loss</td>
+            <td>Click-to-play, captions on by default, larger frame</td>
+          </tr>
+          <tr>
+            <td>Numbering like "Module 3.2.1.b"</td>
+            <td>No mental model of location or remaining effort</td>
+            <td>"Step 2 of 5" tied to a visible progress bar</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="reflection">
+    <div class="wrap">
+      <p class="section-label">Reflection</p>
+      <h2>What I'd want to test next</h2>
+      <p>A cleaner screen is a hypothesis, not proof. If this were a real course, I'd want to check:</p>
+      <ul>
+        <li>Whether time-to-completion actually drops, or whether learners just click through faster without absorbing more</li>
+        <li>Whether comprehension on the post-course quiz improves, not just completion rates</li>
+        <li>Whether removing badges changes engagement for the group that liked them, even if the safety content improves for everyone else</li>
+      </ul>
+      <div class="caveat">
+        This is a personal, unpaid redesign exercise built around a fictional course and company. It's meant to show how I diagnose and restructure a messy interface, not to represent a real client engagement or real outcome data.
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">*Meridian LMS and Warehouse Safety Fundamentals are fictional, created for this exercise.</div>
+  </footer>
+
+<script>
+  const buttons = document.querySelectorAll('.toggle-btn');
+  const states = { before: document.getElementById('state-before'), after: document.getElementById('state-after') };
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      Object.values(states).forEach(s => s.classList.remove('active'));
+      states[btn.dataset.state].classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
